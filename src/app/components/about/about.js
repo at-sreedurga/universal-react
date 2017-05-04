@@ -2,6 +2,7 @@ import React from "react";
 import classNames from "classnames";
 import  { Link, Route } from "react-router-dom";
 import * as styles from "./about.scss";
+import ErrorPage from "../error/404";
 
 export default class About extends React.Component {
   renderContent(section) {
@@ -28,13 +29,15 @@ export default class About extends React.Component {
           &nbsp;for a reason
         </p>
       </div>;
-    default:
+    case "about":
       return <div>
         <p className="h4">Main Section</p>
         <p>
           Never ever ignore the main content, Try click on the left sidebar
         </p>
       </div>;
+      default:
+        return <ErrorPage location={this.props.location} />;
     }
   }
 
@@ -58,7 +61,7 @@ export default class About extends React.Component {
         </div>
         <div className="offset-sm-1 col-sm-6">
           <Route exact path="/about" render={() => {
-            return this.renderContent();
+            return this.renderContent("about");
           }} />
           <Route path="/about/:section" render={({match}) => {
             return this.renderContent(match.params.section);
